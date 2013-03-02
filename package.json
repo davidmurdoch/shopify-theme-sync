@@ -1,0 +1,23 @@
+{
+	"name": "shopify-theme-sync",
+	"description": "A tool to automatically sync themes from your local file system to your hosted Shopify shops.",
+	"tags": ["shopify"],
+	"version": "0.0.1",
+	"homepage": "https://github.com/davidmurdoch/shopify-theme-sync",
+	"bugs": {
+		"url": "https://github.com/davidmurdoch/shopify-theme-sync/issues"
+	},
+	"repository": {
+		"url": "git://github.com/davidmurdoch/shopify-theme-sync.git"
+	},
+	"author": "David Murdoch <shopify-theme-sync@davidmurdoch.com>",
+	"directories": {"lib": "lib"},
+	"engines": ["node >= 0.8.1"],
+	"main": "./app",
+	"dependencies": {
+		"watch": "0.5.1"
+	},
+	"scripts": {
+		"start": "node app"
+	}
+}

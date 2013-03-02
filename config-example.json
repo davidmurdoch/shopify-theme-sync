@@ -1,0 +1,16 @@
+{
+	"shops": [
+		{
+			"name": "ShopName",
+			"apiKey": "api-key",
+			"password": "api-password",
+			"directory": "C:\\Websites\\ShopName"
+		},
+		{
+			"name": "ShopName2",
+			"apiKey": "api-key",
+			"password": "api-password",
+			"directory": "C:\\Websites\\ShopName2"
+		}
+	]
+}
