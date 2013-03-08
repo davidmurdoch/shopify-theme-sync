@@ -43,8 +43,6 @@ If your config file's `directory` property is `/home/websites/shopname/` you sho
 
 ## TODO
 
- 1. Handle `errors` from Shopify properly (errors are currently treated as "success").
- 2. Notify user after successful/failed action without having to switch to the Terminal/Prompt to check status.
- 3. Add config option to automatically minify JavaScript, CSS, and/or HTML (w/liquid), and optimize asset images on the fly.
- 4. Allow sub-directories within theme folders for better file organization. We can "fake" sub directories by replacing the "/" (forward slash) character with a magic string, like "_DIR_" (Shopify doesn't allow special characters in filenames, otherwise I'd just use a solidus `/`), i.e., the resource `assets/css/main.css` would be referenced and uploaded as `assets__DIR__css__DIR__main.css`
- 5. Add config option to automatically download themes from a Shopify store to local disk.
+ 1. Add config option to automatically minify JavaScript, CSS, and/or HTML (w/liquid), and optimize asset images on the fly.
+ 2. Allow sub-directories within theme folders for better file organization. We can "fake" sub directories by replacing the "/" (forward slash) character with a magic string, like "_DIR_" (Shopify doesn't allow special characters in filenames, otherwise I'd just use a solidus `/`), i.e., the resource `assets/css/main.css` would be referenced and uploaded as `assets__DIR__css__DIR__main.css`
+ 3. Add config option to automatically download themes from a Shopify store to local disk.

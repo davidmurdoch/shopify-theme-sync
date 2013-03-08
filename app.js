@@ -1,4 +1,5 @@
 var _ = require("lodash"),
+	colors = require("colors"),
 	watch = require("watch"),
 	domain = require("domain"),
 	fs = require("fs"),
@@ -37,7 +38,11 @@ var _ = require("lodash"),
 	 */
 	options = {
 		"filter": filter
-	};
+	},
+
+	appTitle = "Shopify Theme Syncer";
+
+process.title = appTitle;
 
 _.extend( options, configOptions );
 
@@ -79,7 +84,7 @@ function watchShop ( shopConfig ) {
 				if ( typeof f == "object" && prev === null && curr === null ) {
 					// we're done walking!
 
-					console.log( util.format( "Now watching directory tree: %s\n", directory ) );
+					console.log( util.format( "Now watching directory tree: %s\n".rainbow, directory ) );
 				}
 
 				// we can't actually delete the root (at Shopify), so don't try.
@@ -96,7 +101,7 @@ function watchShop ( shopConfig ) {
 
 						// if we are a file, we can be synced with Shopify (probably)
 						if ( curr.isFile() ) {
-				    		console.log( util.format( "creating: %s\n", f ) );
+				    		updateTitle( util.format( "Creating: %s\n", f ) );
 
 							shopify.create( f, wrap( handleResponse, f + " created" ) );
 						}
@@ -117,7 +122,7 @@ function watchShop ( shopConfig ) {
 					else if ( curr.nlink === 0 ) {
 
 						// f was removed
-						console.log( util.format( "deleting: %s\n", f ) );
+						updateTitle( util.format( "Deleting: %s\n", f ) );
 
 						shopify.delete( f, wrap( handleResponse, f + " deleted" ) );
 					}
@@ -127,7 +132,7 @@ function watchShop ( shopConfig ) {
 						// We *should* never need to deal with directories here, as renamed directories
 						// are treated as delete oldname + create newname
 
-						console.log( util.format( "modifying: %s\n", f ) );
+						updateTitle( util.format( "Modifying: %s\n", f ) );
 
 						shopify.modify( f, wrap( handleResponse, f + " modified" ) );
 					}
@@ -181,13 +186,67 @@ function wrap( fn ) {
  * @param {String} message
  */
 function handleResponse ( error, data, message ) {
-	if ( error ) {
-		console.error( error );
+
+	var titleMsg = "",
+		consoleMsg = "",
+		consoleData = null;
+
+	if ( error || data.errors ) {
+		titleMsg = "Failed: " + message;
+		consoleMsg = titleMsg.red;
+
+		consoleData = error || data.errors;
 	}
 	else if ( data ){
-		console.log( data, message + " successfully" );
+		titleMsg = "Success: " + message;
+		consoleMsg = titleMsg.green;
+
+		consoleData = data;
 	}
 	else {
-		console.log( "No data returned", message );
+		titleMsg = "Failed?: " + message;
+		consoleMsg = titleMsg.yellow;
+
+		consoleData = "[No data]";
 	}
+
+	updateTitle( titleMsg, consoleMsg );
+
+	console.log( consoleData );
+}
+
+/**
+ * Updates the node process' title to `titleMsg` and then blinks it, also writes to the console.
+ *
+ * After blinking for 5 times the title is reset to its original value.
+ *
+ * @param {String} titleMsg The message to display as the title.
+ * @param {String} consoleMsg The message to write to the console. Defaults to `titleMsg` (optional).
+ */
+function updateTitle( titleMsg, consoleMsg ) {
+
+	// make sure we aren't running multiple timeouts
+	clearTimeout( updateTitle.interval );
+
+	console.log( consoleMsg || titleMsg );
+
+	// now, blink the title!
+	process.title = titleMsg;
+	(function blink(i){
+		if ( i > 4 ) {
+			// reset the title to its orginal value
+			updateTitle.interval = setTimeout(function(){
+				process.title = appTitle;
+			}, 5000);
+			return;
+		}
+
+		updateTitle.interval = setTimeout(function(){
+			process.title = "";
+			updateTitle.interval = setTimeout(function(){
+				process.title = titleMsg;
+				blink(++i);
+			}, 200)
+		}, 1250);
+	}(0));
 }
