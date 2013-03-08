@@ -1,4 +1,4 @@
-Shopify Theme Sync for node
+Shopify Theme Sync for node (v 0.0.3)
 ==================
 
 A tool to automatically sync themes from your local file system to your hosted Shopify shops.
