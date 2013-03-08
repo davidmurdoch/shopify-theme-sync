@@ -1,10 +1,12 @@
-var watch = require("watch"),
+var _ = require("lodash"),
+	watch = require("watch"),
 	domain = require("domain"),
 	fs = require("fs"),
 	path = require("path"),
 	util = require("util"),
 	ShopifySyncer = require('./lib/shopify-theme-sync'),
 	config = require("./config.json"),
+	configOptions = _.defaults( { "interval": 500, "ignoreDotFiles": true }, config.options ),
 
 	/**
 	 * A black list of file/directory names.
@@ -34,9 +36,10 @@ var watch = require("watch"),
 	 * walk options. We want to apply our blacklist filter and always ignore dot files.
 	 */
 	options = {
-		"filter": filter,
-		"ignoreDotFiles": true
+		"filter": filter
 	};
+
+_.extend( options, configOptions );
 
 if ( config && Array.isArray( config.shops ) && config.shops.length > 0 ) {
 	// todo: spin up
@@ -67,11 +70,12 @@ function watchShop ( shopConfig ) {
 	if ( directory ) {
 		if ( fs.existsSync( directory ) ) {
 
-			var shopify = new ShopifySyncer( shopConfig );
+			var shopify = new ShopifySyncer( shopConfig ),
+				shopOptions = _.extend( {}, options, shopConfig.options || {} );
 
 			console.log( util.format( "Walking directory tree: %s\n", directory) );
 
-			watch.watchTree( directory, options, function sync( f, curr, prev ) {
+			watch.watchTree( directory, shopOptions, function sync( f, curr, prev ) {
 				if ( typeof f == "object" && prev === null && curr === null ) {
 					// we're done walking!
 

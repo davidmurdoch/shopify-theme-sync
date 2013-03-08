@@ -10,7 +10,15 @@
 			"name": "ShopName2",
 			"apiKey": "api-key",
 			"password": "api-password",
-			"directory": "C:\\Websites\\ShopName2"
+			"directory": "C:\\Websites\\ShopName2",
+			"options": {
+				"interval": 5007,
+				"ignoreDotFiles": true
+			}
 		}
-	]
+	],
+	"options": {
+		"interval": 250,
+		"ignoreDotFiles": false
+	}
 }
