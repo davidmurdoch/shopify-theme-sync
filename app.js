@@ -120,8 +120,8 @@ function watchShop ( shopConfig ) {
 						}
 					}
 					else if ( curr.nlink === 0 ) {
-
 						// f was removed
+
 						updateTitle( util.format( "Deleting: %s\n", f ) );
 
 						shopify.delete( f, wrap( handleResponse, f + " deleted" ) );
