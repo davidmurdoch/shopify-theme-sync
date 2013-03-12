@@ -84,7 +84,7 @@ function watchShop ( shopConfig ) {
 				if ( typeof f == "object" && prev === null && curr === null ) {
 					// we're done walking!
 
-					console.log( util.format( "Now watching directory tree: %s\n".rainbow, directory ) );
+					console.log( util.format( "Now watching directory tree: %s\n", directory ).rainbow );
 				}
 
 				// we can't actually delete the root (at Shopify), so don't try.
@@ -92,7 +92,7 @@ function watchShop ( shopConfig ) {
 
 					// `walk` sometimes lets filtered files through (usually on creation), so we need to double check.
 					if ( filter( f, curr, blacklist ) ){
-						console.log( "filtered file ignored: %s\n", f );
+						console.log( util.format( "filtered file ignored: %s\n", f ) );
 						return;
 					}
 
@@ -124,7 +124,7 @@ function watchShop ( shopConfig ) {
 
 						updateTitle( util.format( "Deleting: %s\n", f ) );
 
-						shopify.delete( f, wrap( handleResponse, f + " deleted" ) );
+						shopify.delete( f, wrap( handleResponse, f + " deleted\n" ) );
 					}
 					else {
 						// f was changed.
@@ -134,7 +134,7 @@ function watchShop ( shopConfig ) {
 
 						updateTitle( util.format( "Modifying: %s\n", f ) );
 
-						shopify.modify( f, wrap( handleResponse, f + " modified" ) );
+						shopify.modify( f, wrap( handleResponse, f + " modified\n" ) );
 					}
 				}
 			});
