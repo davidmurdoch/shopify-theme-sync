@@ -15,9 +15,10 @@
 	"engines": ["node >= 0.8.1"],
 	"main": "./app",
 	"dependencies": {
-		"watch": "0.5.1",
+		"colors": "0.6.0-1",
 		"lodash": "1.0.1",
-		"colors": "0.6.0-1"
+		"watch": "0.5.1",
+		"uglify-js": "2.2.5"
 	},
 	"scripts": {
 		"start": "node app"

@@ -5,9 +5,24 @@ var _ = require("lodash"),
 	fs = require("fs"),
 	path = require("path"),
 	util = require("util"),
+
 	ShopifySyncer = require('./lib/shopify-theme-sync'),
+
 	config = require("./config.json"),
-	configOptions = _.defaults( { "interval": 500, "ignoreDotFiles": true }, config.options ),
+
+	defaults = {
+		"compress": {
+			// do not compress JavaScript or JSON by default.
+			"js": false
+		},
+		"ignoreDotFiles": true,
+		"interval": 500
+	},
+
+	// Merge the base options in config.json with our `defaults` object.
+	// Note: We can't use `_.defaults` here directly because it will not perform a "deep" merge. The _.merge method
+	// below was suggested by @jdalton himself: https://github.com/bestiejs/lodash/issues/154#issuecomment-12310052
+	configOptions = _.merge( {}, config.options, defaults, _.defaults ),
 
 	/**
 	 * A black list of file/directory names.
@@ -47,8 +62,11 @@ process.title = appTitle;
 _.extend( options, configOptions );
 
 if ( config && Array.isArray( config.shops ) && config.shops.length > 0 ) {
-	// todo: spin up
 	config.shops.forEach(function( shopConfig ) {
+
+		// set `options` on our shopConfig and make sure defaults are applied (deep).
+		_.merge( shopConfig.options = shopConfig.options || {}, options, _.defaults );
+
 		var shopDomain = domain.create();
 		shopDomain.on( "error", function( error ) {
 			console.error( ( "An error occurred in shop: %s. Details below:", shopConfig.name ) );
@@ -76,7 +94,7 @@ function watchShop ( shopConfig ) {
 		if ( fs.existsSync( directory ) ) {
 
 			var shopify = new ShopifySyncer( shopConfig ),
-				shopOptions = _.extend( {}, options, shopConfig.options || {} );
+				shopOptions = shopConfig.options;
 
 			console.log( util.format( "Walking directory tree: %s\n", directory) );
 

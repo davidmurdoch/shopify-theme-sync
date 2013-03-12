@@ -19,6 +19,9 @@
 	],
 	"options": {
 		"interval": 250,
-		"ignoreDotFiles": false
+		"ignoreDotFiles": false,
+		"compress": {
+			"js": true
+		}
 	}
 }
