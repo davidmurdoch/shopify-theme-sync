@@ -1,4 +1,4 @@
-Shopify Theme Sync for node (v 0.0.3)
+Shopify Theme Sync for node (v 0.0.4)
 ==================
 
 A tool to automatically sync themes from your local file system to your hosted Shopify shops.
@@ -19,6 +19,7 @@ A tool to automatically sync themes from your local file system to your hosted S
 
 Check `config-example.json` for examples on applying these options. The defaults are:
 
+```
  {
  	"compress": {
  		// Enable this option for automatic file compression with Uglify.js
@@ -28,6 +29,7 @@ Check `config-example.json` for examples on applying these options. The defaults
  	"ignoreDotFiles": true, // ignore dotfiles by default.
  	"interval": 500 // the default interval used when checking files for modification (in milliseconds)
  }
+```
 
 ## To Actually Edit Templates:
 
