@@ -25,7 +25,7 @@ Check `config-example.json` for examples on applying these options. The defaults
  		// Enable this option for automatic file compression with Uglify.js
  		// Note: minification will only be applied to the uploaded file, the local file will not be modified.
  		"js": false // do not compress/minify JavaScript/JSON by default.
- 	}.
+ 	},
  	"ignoreDotFiles": true, // ignore dotfiles by default.
  	"interval": 500 // the default interval used when checking files for modification (in milliseconds)
  }
