@@ -20,6 +20,7 @@
 	"options": {
 		"interval": 250,
 		"ignoreDotFiles": false,
+		"uploadOriginal": false,
 		"compress": {
 			"js": true
 		}
