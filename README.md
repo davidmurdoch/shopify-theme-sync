@@ -1,4 +1,4 @@
-Shopify Theme Sync for node (v 0.0.4)
+Shopify Theme Sync for node (v 0.0.5)
 ==================
 
 A command line tool to monitor and sync themes from your local file system to your hosted Shopify shops.
