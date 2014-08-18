@@ -108,7 +108,17 @@ function watchShop ( shopConfig ) {
 				// we can't actually delete the root (at Shopify), so don't try.
 				else if ( f !== directory ) {
 
+					// `walk` sometimes lets dot files through (usually on creation), so we need to double check.
+					if ( shopOptions.ignoreDotFiles && path.basename(f)[0] === "." ) {
+						console.log( util.format( "dotFile file ignored: %s\n", f ) );
+						return;
+					}
+
 					// `walk` sometimes lets filtered files through (usually on creation), so we need to double check.
+					if ( filter( f, curr, blacklist ) ){
+						console.log( util.format( "filtered file ignored: %s\n", f ) );
+						return;
+					}
 					if ( filter( f, curr, blacklist ) ){
 						console.log( util.format( "filtered file ignored: %s\n", f ) );
 						return;
