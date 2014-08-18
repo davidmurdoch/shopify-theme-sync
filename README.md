@@ -13,7 +13,7 @@ A command line tool to monitor and sync themes from your local file system to yo
  2. edit the properties of `config.json` to match your Shopify shops' *private app* credentials (you can do this by going to https://{yourshop}.myshopify.com/admin/apps/private) then point the config file's `directory` property to your themes' folders.
 
  3. Run the command `npm start` (or `node app`) and start editing your Shopify templates!
-   
+
 *If you have any questions about these steps, or don't know how to use a command line tool like this one, feel free to open an issue here and/or ask about it on StackOverflow.*
 
 ## Options
@@ -27,6 +27,7 @@ Check `config-example.json` for examples on applying these options. The defaults
  		// Note: minification will only be applied to the uploaded file, the local file will not be modified.
  		"js": false // do not compress/minify JavaScript/JSON by default.
  	},
+ 	"uploadOriginal": false, // for compressed files, upload the original version also (with a .orig extension)
  	"ignoreDotFiles": true, // ignore dotfiles by default.
  	"interval": 500 // the default interval used when checking files for modification (in milliseconds)
  }
@@ -35,7 +36,7 @@ Check `config-example.json` for examples on applying these options. The defaults
 ## To Actually Edit Templates:
 
 You'll first need to install the template into your Shopify store then download and extract the zip file for the template.
-For now, *each template for your shop must be named after its template ID, e.g., `3981452` and  `4870543`.*
+For now, *each template for your shop *must* be named after its template ID, e.g., `3981452` and `4870543`.*
 
 If your config file's `directory` property is `/home/websites/shopname/` you should have directory tree similar to:
 
