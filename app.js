@@ -264,7 +264,7 @@ function updateTitle( titleMsg, consoleMsg ) {
 			updateTitle.interval = setTimeout(function(){
 				process.title = titleMsg;
 				blink(++i);
-			}, 200)
+			}, 200);
 		}, 1250);
 	}(0));
 }
