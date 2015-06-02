@@ -115,11 +115,11 @@ function watchShop ( shopConfig ) {
 					}
 
 					// `walk` sometimes lets filtered files through (usually on creation), so we need to double check.
-					if ( filter( f, curr, blacklist ) ){
+					if ( !filter( f, curr, blacklist ) ){
 						console.log( util.format( "filtered file ignored: %s\n", f ) );
 						return;
 					}
-					if ( filter( f, curr, blacklist ) ){
+					if ( !filter( f, curr, blacklist ) ){
 						console.log( util.format( "filtered file ignored: %s\n", f ) );
 						return;
 					}
@@ -135,7 +135,7 @@ function watchShop ( shopConfig ) {
 						}
 
 						// only some directories can be synced, make sure we are one of these before trying.
-						else if ( curr.isDirectory() && filter( f, curr, validDirectories ) ) {
+						else if ( curr.isDirectory() && !filter( f, curr, validDirectories ) ) {
 
 							// a directory was created (or just renamed), sync its files.
 							watch.walk( f, options, function( err, files ) {
@@ -183,10 +183,10 @@ function watchShop ( shopConfig ) {
  * @param {Object} stat Not used, but required.
  * @param {Array} arr The array to filter on (optional, defaults to blacklist). All entries should be lowercased.
  *
- * @return {Boolean} True if the file was found in the list, false if it wasn't.
+ * @return {Boolean} False if the file was found in the list, true if it wasn't.
  */
 function filter( f, stat, arr ) {
-	return (arr || blacklist).indexOf( path.basename( f ).toLowerCase() ) !== -1;
+  return (arr || blacklist).indexOf( path.basename( f ).toLowerCase() ) === -1;
 }
 
 /**
